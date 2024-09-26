@@ -13,6 +13,8 @@ class TransactionProvider with ChangeNotifier {
     var db = await TransactionDB(dbName: 'transactions.db').openDatabase();
     transactions.add(transaction);
     notifyListeners();
+
+    //return db;
   }
 
   void deleteTransaction(int index) {
