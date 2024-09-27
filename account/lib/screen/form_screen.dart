@@ -74,7 +74,7 @@ class FormScreen extends StatelessWidget {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           // create transaction data object
-                          var statement = Transaction(
+                          var statement = Transactions(
                               title: titleController.text,
                               amount: double.parse(amountController.text),
                               date: DateTime.now());

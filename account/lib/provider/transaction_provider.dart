@@ -1,20 +1,18 @@
+import 'package:account/databases/transaction_db.dart';
 import 'package:flutter/foundation.dart';
-import 'package:account/database/transaction_db.dart';
 import 'package:account/models/transactions.dart';
 
 class TransactionProvider with ChangeNotifier {
-  List<Transaction> transactions = [];
+  List<Transactions> transactions = [];
 
-  List<Transaction> getTransaction() {
+  List<Transactions> getTransaction() {
     return transactions;
   }
 
-  void addTransaction(Transaction transaction) async{
+  void addTransaction(Transactions transaction) async{
     var db = await TransactionDB(dbName: 'transactions.db').openDatabase();
-    transactions.add(transaction);
+    transactions.insert(0,transaction);
     notifyListeners();
-
-    //return db;
   }
 
   void deleteTransaction(int index) {
