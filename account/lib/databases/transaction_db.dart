@@ -42,7 +42,7 @@ class TransactionDB {
     // เปิด database บันทึกไว้ที่ db
     var db = await this.openDatabase();
     //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
-    var store = intMapStoreFactory.store('expense');
+    // var store = intMapStoreFactory.store('expense');
     
     // json
     // await store.record(1).delete(db);
