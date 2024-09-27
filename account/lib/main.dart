@@ -118,7 +118,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.of(context).pop();
                               provider.deleteTransaction(index);
                             },
-                            child: Text('Delete')
+                            child: Text('Delete'),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red
+                            )
                             ),
                             TextButton(onPressed: (){
                               Navigator.of(context).pop();
