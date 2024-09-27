@@ -10,16 +10,27 @@ class TransactionProvider with ChangeNotifier {
     return transactions;
   }
 
-  void addTransaction(Transactions transaction) async{
+  void initData() async{
     var db = await TransactionDB(dbName: 'transactions.db');
-    var keyID = await db.insertDatabase(transaction);
-    db.loadAllData();
-    print("keyID: $keyID");
+    transactions = await db.loadAllData();
+
     notifyListeners();
   }
 
-  void deleteTransaction(int index) {
-    transactions.removeAt(index);
+  void addTransaction(Transactions transaction) async{
+    var db = await TransactionDB(dbName: 'transactions.db');
+    await db.insertDatabase(transaction);
+    transactions = await db.loadAllData();
+
+    notifyListeners();
+  }
+
+  void deleteTransaction(int index) async{
+    var db = await TransactionDB(dbName: 'transactions.db');
+    await db.deleteDatabase(index);
+    transactions = await db.loadAllData();
+
+    print(index);
     notifyListeners(); 
   }
 }

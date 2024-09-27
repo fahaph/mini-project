@@ -45,13 +45,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
+  
+  // โหลดข้อมูลก่อนสร้างหน้าต่าง
+  @override
+  void initState() {
+    super.initState();
 
-  // void _incrementCounter() {
-  //   setState(() {
-  //     // _counter++;
-  //   });
-  // }
+    // น่าจะเป็นการสร้างตัวแปรที่ดึงข้อมูลจาก class TransactionProvider ได้
+    var provider = Provider.of<TransactionProvider>(context, listen: false);
+
+    // เรียกใช้ initData() จาก class TransactionProvider
+    provider.initData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         showDialog(context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: Text('Warning'),
+                          title: Text(statement.title),
                           content: Text('Are you sure you want to delete it?'),
                           actions: [
                             TextButton(onPressed: (){

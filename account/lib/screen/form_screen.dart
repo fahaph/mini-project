@@ -29,11 +29,6 @@ class FormScreen extends StatelessWidget {
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'ชื่อรายการ',
-                      // border: InputBorder.none,
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(
-                      //       color: Color.fromARGB(255, 51, 184, 255)),
-                      // ),
                     ),
                     autofocus: true,
                     controller: titleController,
