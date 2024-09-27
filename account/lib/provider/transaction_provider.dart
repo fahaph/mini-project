@@ -19,8 +19,10 @@ class TransactionProvider with ChangeNotifier {
 
   void addTransaction(Transactions transaction) async{
     var db = await TransactionDB(dbName: 'transactions.db');
-    await db.insertDatabase(transaction);
+    var keyID = await db.insertDatabase(transaction);
     transactions = await db.loadAllData();
+
+    print('keyID: $keyID');
 
     notifyListeners();
   }
@@ -30,7 +32,6 @@ class TransactionProvider with ChangeNotifier {
     await db.deleteDatabase(index);
     transactions = await db.loadAllData();
 
-    print(index);
     notifyListeners(); 
   }
 }

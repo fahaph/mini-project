@@ -1,15 +1,16 @@
+import 'package:account/databases/transaction_db.dart';
 import 'package:flutter/material.dart';
 import 'package:account/screen/form_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
+import 'package:sembast/sembast.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
@@ -35,7 +37,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  
   const MyHomePage({super.key, required this.title});
 
   final String title;
@@ -45,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
   // โหลดข้อมูลก่อนสร้างหน้าต่าง
   @override
   void initState() {
@@ -58,12 +58,22 @@ class _MyHomePageState extends State<MyHomePage> {
     provider.initData();
   }
 
+  // void loadData() async{
+
+  //   var transactionDb = Provider.of<TransactionDB>(context, listen: false);
+  //   // เปิด database บันทึกไว้ที่ db
+  //   var db = await transactionDb.openDatabase();
+  //   //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
+  //   var store = intMapStoreFactory.store('expense');
+    
+    
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor:Color.fromARGB(255, 0, 150, 255),
+        backgroundColor: Color.fromARGB(255, 0, 150, 255),
 
         // shape: RoundedRectangleBorder(
         //   borderRadius: BorderRadius.only(
@@ -72,7 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
         //   ),
         // ),
 
-        title: Text(widget.title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
 
         actions: [
           IconButton(
@@ -114,30 +127,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        showDialog(context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text(statement.title),
-                          content: Text('Are you sure you want to delete it?'),
-                          actions: [
-                            TextButton(onPressed: (){
-                              Navigator.of(context).pop();
-                              provider.deleteTransaction(index);
-                            },
-                            child: Text('Delete'),
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.red
-                            )
-                            ),
-                            TextButton(onPressed: (){
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Cancel')
-                            ),
-                          ],
-                        )
-                        );
-                        // provider.deleteTransaction(index);
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: Text(statement.title),
+                                  content: Text(
+                                      'Are you sure you want to delete it?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          provider.deleteTransaction(index);
+                                        },
+                                        child: Text('Delete'),
+                                        style: TextButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor: Colors.red)),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancel')),
+                                  ],
+                                ));
                       },
                     ),
                   ),
