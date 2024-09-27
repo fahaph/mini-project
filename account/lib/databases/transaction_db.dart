@@ -23,13 +23,14 @@ class TransactionDB {
 
   Future<int> insertDatabase(Transactions transaction) async {
     var db = await this.openDatabase();
-    var store = intMapStoreFactory
-        .store('expense'); //สร้างตัวแปร ที่จะไปสร้าง db ที่ชื่อ expense
+    
+    //สร้างตัวแปร ที่จะไปสร้าง db ที่ชื่อ expense
+    var store = intMapStoreFactory.store('expense');
 
     // json
     var keyID = store.add(db, {
       "title": transaction.title,
-      "amount:": transaction.amount,
+      "amount": transaction.amount,
       "date": transaction.date.toIso8601String(),
     });
     db.close();
