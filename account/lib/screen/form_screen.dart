@@ -7,7 +7,7 @@ import 'package:account/provider/transaction_provider.dart';
 // ignore: must_be_immutable
 class FormScreen extends StatelessWidget {
 
-  double _rating = 3.0; // Add this variable at the beginning of your class
+  double _rating = 3;
 
   FormScreen({super.key});
 
@@ -104,7 +104,7 @@ class FormScreen extends StatelessWidget {
                   ),
 
                   SizedBox(height: 15),
-                  
+
                   TextButton(
                       style: TextButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 0, 150, 255),
