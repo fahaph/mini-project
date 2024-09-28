@@ -1,3 +1,4 @@
+import 'package:account/screen/edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:account/screen/form_screen.dart';
 import 'package:intl/intl.dart';
@@ -113,6 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                   TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return EditScreen();
+                                        }));
                                         // provider.deleteTransaction(statement);
                                       },
                                       child: Text('Edit'),

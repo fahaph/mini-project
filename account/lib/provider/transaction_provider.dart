@@ -33,4 +33,8 @@ class TransactionProvider with ChangeNotifier {
 
     notifyListeners(); 
   }
+
+  void editTransaction(Transactions transaction){
+
+  }
 }

@@ -109,7 +109,7 @@ class FormScreen extends StatelessWidget {
                         foregroundColor: Colors.white,
                       ),
                       child: const Text(
-                        'บันทึก',
+                        'Save',
                       ),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
