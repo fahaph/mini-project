@@ -1,8 +1,33 @@
-import 'package:account/screen/edit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
+
+class Delete extends StatelessWidget {
+  const Delete({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) {
+          return TransactionProvider();
+        }),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 0, 0)),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        title: '',
+        home: const DeleteScreen(title: 'Delete'),
+      ),
+    );
+  }
+}
 
 class DeleteScreen extends StatefulWidget {
   const DeleteScreen({super.key, required this.title});
@@ -27,15 +52,8 @@ class _DeleteScreenState extends State<DeleteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          
-        },
-        backgroundColor: Color.fromARGB(255, 0, 150, 255),
-        child: Icon(Icons.delete),
-      ),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 150, 255),
+        backgroundColor: Color.fromARGB(255, 255, 0, 0),
         elevation: 15,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -43,11 +61,13 @@ class _DeleteScreenState extends State<DeleteScreen> {
             bottomRight: Radius.circular(5),
           ),
         ),
-        title: Text('Delete', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text(
+          'Delete',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
+          color: Colors.white,
+        ),
       ),
       body: Consumer<TransactionProvider>(
         builder: (context, provider, Widget? child) {
@@ -65,49 +85,29 @@ class _DeleteScreenState extends State<DeleteScreen> {
                   margin:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                   child: ListTile(
-                    onLongPress: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                title: Text(
-                                    '${statement.title} - ${statement.resta}'),
-                                content:
-                                    Text('Are you sure you want to edit it?'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancel')),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return EditScreen(dStatement: statement,);
-                                        }));
-                                        // provider.deleteTransaction(statement);
-                                      },
-                                      child: Text('Edit'),
-                                      style: TextButton.styleFrom(
-                                          foregroundColor: Colors.white,
-                                          backgroundColor: Colors.green)),
-                                ],
-                              ));
-                    },
-                    title: Text('${statement.title} - ${statement.resta}'),
+                    title: Text(
+                      '${statement.title} - ${statement.resta}',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
                     subtitle: Text(DateFormat('dd/MM/yyyy hh:mm:ss aaa')
-                        .format(statement.date)),
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: const Color.fromARGB(124, 255, 230, 146),
-                      child: FittedBox(
-                        child: Text('${statement.rating}/5.0'),
-                      ),
+                        .format(statement.date), style: TextStyle(fontSize: 11),),
+                    leading: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 25,
+                          color: Colors.amber,
+                        ),
+                        Text(statement.rating.toString()),
+                      ],
                     ),
                     trailing: IconButton(
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
                       onPressed: () {
                         showDialog(
                             context: context,
@@ -126,6 +126,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           provider.deleteTransaction(statement);
+                                          Navigator.pop(context);
                                         },
                                         child: Text('Delete'),
                                         style: TextButton.styleFrom(

@@ -19,7 +19,6 @@ class Menus extends StatelessWidget {
         }),
       ],
       child: MaterialApp(
-        
         theme: ThemeData(
           colorScheme:
               ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
@@ -27,22 +26,22 @@ class Menus extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         title: '',
-        home: const MyHomePage(title: 'Menu'),
+        home: const MenusScreen(title: 'Menu'),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MenusScreen extends StatefulWidget {
+  const MenusScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MenusScreen> createState() => _MenusScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MenusScreenState extends State<MenusScreen> {
   // โหลดข้อมูลก่อนสร้างหน้าต่าง
   @override
   void initState() {
@@ -59,14 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context){
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
             return DeleteScreen(title: 'Delete');
           }));
           // DeleteScreen(title: 'Delete');
         },
-        backgroundColor: Color.fromARGB(255, 0, 150, 255),
-        child: Icon(Icons.delete),
+        backgroundColor: Colors.red,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
       ),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 0, 150, 255),
@@ -116,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 title: Text(
                                     '${statement.title} - ${statement.resta}'),
                                 content:
-                                    Text('Are you sure you want to edit it?'),
+                                    Text('Are you sure you want to edit it'),
                                 actions: [
                                   TextButton(
                                       onPressed: () {
@@ -129,7 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return EditScreen(dStatement: statement,);
+                                          return EditScreen(
+                                            dStatement: statement,
+                                          );
                                         }));
                                         // provider.deleteTransaction(statement);
                                       },
@@ -140,44 +144,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ],
                               ));
                     },
-                    title: Text('${statement.title} - ${statement.resta}'),
-                    subtitle: Text(DateFormat('dd/MM/yyyy hh:mm:ss aaa')
-                        .format(statement.date)),
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: const Color.fromARGB(124, 255, 230, 146),
-                      child: FittedBox(
-                        child: Text('${statement.rating}/5.0'),
-                      ),
+                    title: Text(
+                      '${statement.title} - ${statement.resta}',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                  title: Text(
-                                      '${statement.title} - ${statement.resta}'),
-                                  content: Text(
-                                      'Are you sure you want to delete it?'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('Cancel')),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          provider.deleteTransaction(statement);
-                                        },
-                                        child: Text('Delete'),
-                                        style: TextButton.styleFrom(
-                                            foregroundColor: Colors.white,
-                                            backgroundColor: Colors.red)),
-                                  ],
-                                ));
-                      },
+                    subtitle: Text(DateFormat('dd/MM/yyyy hh:mm:ss aaa')
+                        .format(statement.date), style: TextStyle(fontSize: 11),),
+                    leading: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 25,
+                          color: Colors.amber,
+                        ),
+                        Text(statement.rating.toString()),
+                      ],
+                    ),
+                    trailing: FittedBox(
+                      child: Text(
+                        statement.price.toString(),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 );
@@ -189,3 +179,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+// CircleAvatar(
+//                       radius: 30,
+//                       backgroundColor: const Color.fromARGB(124, 255, 230, 146),
+//                       child: FittedBox(
+//                         child: Text('${statement.rating}'),
+//                       ),
+//                     ),

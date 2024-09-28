@@ -55,7 +55,7 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 0, 150, 255),
+          backgroundColor: Colors.green,
           elevation: 15,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -123,12 +123,10 @@ class _EditScreenState extends State<EditScreen> {
                     controller: _priceEditingController,
                     onChanged: (value) {
                       setState(() {
-
                         // เช็ค null
-                        if(value.isEmpty){
+                        if (value.isEmpty) {
                           updatedPrice = 0.0;
-                        }
-                        else{
+                        } else {
                           updatedPrice = double.parse(value);
                         }
                         // updatedPrice = double.parse(value);
