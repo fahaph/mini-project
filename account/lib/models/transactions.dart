@@ -12,4 +12,14 @@ class Transactions {
     required this.price,
     required this.date,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'resta': resta,
+      'rating': rating,
+      'price': price,
+      'date': date.toIso8601String(),
+    };
+  }
 }

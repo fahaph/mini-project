@@ -20,10 +20,10 @@ class _EditScreenState extends State<EditScreen> {
   late final double dRating;
   late final DateTime dDate;
 
-  String updatedTitle = '';
-  String updatedResta = '';
-  double updatedPrice = 0;
-  double updatedRating = 0;
+  late String? updatedTitle;
+  late String? updatedResta;
+  late double? updatedPrice;
+  late double? updatedRating;
 
   late TextEditingController _titleEditingController;
   late TextEditingController _restaEditingController;
@@ -41,11 +41,14 @@ class _EditScreenState extends State<EditScreen> {
     _titleEditingController = TextEditingController(text: dTitle);
     _restaEditingController = TextEditingController(text: dResta);
     _priceEditingController = TextEditingController(text: dPrice.toString());
+
+    updatedTitle = dTitle;
+    updatedResta = dResta;
+    updatedPrice = dPrice;
+    updatedRating = dRating;
   }
 
   final formKey = GlobalKey<FormState>();
-
-  String str = 'asd';
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +122,15 @@ class _EditScreenState extends State<EditScreen> {
                     controller: _priceEditingController,
                     onChanged: (value) {
                       setState(() {
-                        updatedPrice = double.parse(value);
+
+                        // เช็ค null
+                        if(value.isEmpty){
+                          updatedPrice = 0.0;
+                        }
+                        else{
+                          updatedPrice = double.parse(value);
+                        }
+                        // updatedPrice = double.parse(value);
                       });
                     },
                     validator: (String? input) {
@@ -171,10 +182,10 @@ class _EditScreenState extends State<EditScreen> {
                               date: dDate);
 
                           var updatedStatement = Transactions(
-                              title: updatedTitle,
-                              resta: updatedResta,
-                              rating: updatedRating,
-                              price: updatedPrice,
+                              title: updatedTitle!,
+                              resta: updatedResta!,
+                              rating: updatedRating!,
+                              price: updatedPrice!,
                               date: dDate);
 
                           // add transaction data object to provider
