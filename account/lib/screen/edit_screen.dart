@@ -30,6 +30,7 @@ class _EditScreenState extends State<EditScreen> {
   late TextEditingController _priceEditingController;
 
   @override
+  // ฟังก์ชั่นติดตั้งข้อมูลเบื้องต้น เมื่อที่นี่เริ่มทำงาน
   void initState() {
     super.initState();
     dTitle = widget.dStatement.title;
