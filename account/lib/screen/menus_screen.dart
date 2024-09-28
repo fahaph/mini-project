@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return EditScreen();
+                                          return EditScreen(dStatement: statement,);
                                         }));
                                         // provider.deleteTransaction(statement);
                                       },

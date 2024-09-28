@@ -36,103 +36,104 @@ class FormScreen extends StatelessWidget {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
-          child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Menu',
-                    ),
-                    autofocus: true,
-                    controller: titleController,
-                    validator: (String? str) {
-                      if (str!.isEmpty) {
-                        return 'Please Insert Info';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Restaurant',
-                    ),
-                    autofocus: true,
-                    controller: restaController,
-                    validator: (String? str) {
-                      if (str!.isEmpty) {
-                        return 'Please Insert Info';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Price',
-                    ),
-                    keyboardType: TextInputType.number,
-                    controller: priceController,
-                    validator: (String? input) {
-                      try {
-                        double price = double.parse(input!);
-                        if (price < 0) {
-                          return 'Insert More Than or Equals 0';
-                        }
-                      } catch (e) {
-                        return 'Please Insert Number';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 15),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                      _rating = rating;
-                    },
-                  ),
-                  SizedBox(height: 15),
-                  TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 0, 150, 255),
-                        foregroundColor: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Menu',
+                        ),
+                        autofocus: true,
+                        controller: titleController,
+                        validator: (String? str) {
+                          if (str!.isEmpty) {
+                            return 'Please Insert Info';
+                          }
+                          return null;
+                        },
                       ),
-                      child: const Text(
-                        'Save',
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Restaurant',
+                        ),
+                        autofocus: true,
+                        controller: restaController,
+                        validator: (String? str) {
+                          if (str!.isEmpty) {
+                            return 'Please Insert Info';
+                          }
+                          return null;
+                        },
                       ),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          // create transaction data object
-                          var statement = Transactions(
-                              title: titleController.text,
-                              resta: restaController.text,
-                              rating: _rating,
-                              price: double.parse(priceController.text),
-                              date: DateTime.now());
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Price',
+                        ),
+                        keyboardType: TextInputType.number,
+                        controller: priceController,
+                        validator: (String? input) {
+                          try {
+                            double price = double.parse(input!);
+                            if (price < 0) {
+                              return 'Insert More Than or Equals 0';
+                            }
+                          } catch (e) {
+                            return 'Please Insert Number';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      RatingBar.builder(
+                        initialRating: 3,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: false,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                          _rating = rating;
+                        },
+                      ),
+                      SizedBox(height: 15),
+                      TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 0, 150, 255),
+                            foregroundColor: Colors.white,
+                          ),
+                          child: const Text(
+                            'Save',
+                          ),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              // create transaction data object
+                              var statement = Transactions(
+                                  title: titleController.text,
+                                  resta: restaController.text,
+                                  rating: _rating,
+                                  price: double.parse(priceController.text),
+                                  date: DateTime.now());
 
-                          // add transaction data object to provider
-                          var provider = Provider.of<TransactionProvider>(
-                              context,
-                              listen: false);
+                              // add transaction data object to provider
+                              var provider = Provider.of<TransactionProvider>(
+                                  context,
+                                  listen: false);
 
-                          provider.addTransaction(statement);
+                              provider.addTransaction(statement);
 
-                          Navigator.pop(context);
-                        }
-                      })
-                ],
-              )),
-        ));
+                              Navigator.pop(context);
+                            }
+                          })
+                    ],
+                  )),
+            )));
   }
 }

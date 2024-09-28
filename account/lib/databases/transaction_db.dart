@@ -60,6 +60,15 @@ class TransactionDB {
     // return keyID;
   }
 
+  Future updateDatabase(Transactions dTransaction, Transactions updatedTransaction) async{
+    // เปิด database บันทึกไว้ที่ db
+    var db = await this.openDatabase();
+    //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
+    var store = intMapStoreFactory.store('expense');
+
+    db.close();
+  }
+
   Future<List<Transactions>> loadAllData() async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');

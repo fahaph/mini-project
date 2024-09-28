@@ -5,146 +5,191 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
-class EditScreen extends StatelessWidget {
+class EditScreen extends StatefulWidget {
+  final Transactions dStatement;
+  EditScreen({required this.dStatement});
+  // super.key,
+  @override
+  State<EditScreen> createState() => _EditScreenState();
+}
 
-  
+class _EditScreenState extends State<EditScreen> {
+  late final String dTitle;
+  late final String dResta;
+  late final double dPrice;
+  late final double dRating;
+  late final DateTime dDate;
 
-  // String _title = 'title';
-  // String _resta = 'resta';
-  // double _price = 99.9;
+  String updatedTitle = '';
+  String updatedResta = '';
+  double updatedPrice = 0;
+  double updatedRating = 0;
 
-  double _rating = 3;
-  EditScreen({super.key});
+  late TextEditingController _titleEditingController;
+  late TextEditingController _restaEditingController;
+  late TextEditingController _priceEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    dTitle = widget.dStatement.title;
+    dResta = widget.dStatement.resta;
+    dPrice = widget.dStatement.price;
+    dRating = widget.dStatement.rating;
+    dDate = widget.dStatement.date;
+
+    _titleEditingController = TextEditingController(text: dTitle);
+    _restaEditingController = TextEditingController(text: dResta);
+    _priceEditingController = TextEditingController(text: dPrice.toString());
+  }
 
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController _titleEditingController = new TextEditingController()..text = 'default title';
-  TextEditingController _restaEditingController = new TextEditingController()..text = 'default resta';
-  TextEditingController _priceEditingController = new TextEditingController()..text = '999';
+  String str = 'asd';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 0, 150, 255),
-        elevation: 15,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(5),
-            bottomRight: Radius.circular(5),
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 0, 150, 255),
+          elevation: 15,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(5),
+              bottomRight: Radius.circular(5),
+            ),
+          ),
+          title: const Text(
+            'Edit',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
           ),
         ),
-        title: const Text(
-          'Edit',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Form(
-            key: formKey,
-            child: Column(children: [
-              TextFormField(
-                // initialValue: _title,
-                decoration: InputDecoration(
-                  labelText: 'Menu',
-                ),
-                autofocus: true,
-                controller: _titleEditingController,
-                validator: (String? str) {
-                  if (str!.isEmpty) {
-                    return 'Please Insert Info';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                // initialValue: _resta,
-                decoration: InputDecoration(
-                  labelText: 'Restaurant',
-                ),
-                autofocus: true,
-                controller: _restaEditingController,
-                validator: (String? str) {
-                  if (str!.isEmpty) {
-                    return 'Please Insert Info';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                // initialValue: _price.toString(),
-                decoration: const InputDecoration(
-                  labelText: 'Price',
-                ),
-                keyboardType: TextInputType.number,
-                controller: _priceEditingController,
-                validator: (String? input) {
-                  try {
-                    double price = double.parse(input!);
-                    if (price < 0) {
-                      return 'Insert More Than or Equals 0';
-                    }
-                  } catch (e) {
-                    return 'Please Insert Number';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              RatingBar.builder(
-                initialRating: _rating,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: false,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                  _rating = rating;
-                },
-              ),
-              SizedBox(height: 15),
-              TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 0, 150, 255),
-                    foregroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Form(
+                key: formKey,
+                child: Column(children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Menu',
+                    ),
+                    autofocus: true,
+                    controller: _titleEditingController,
+                    onChanged: (value) {
+                      setState(() {
+                        updatedTitle = value;
+                      });
+                    },
+                    validator: (String? str) {
+                      if (str!.isEmpty) {
+                        return 'Please Insert Info';
+                      }
+                      return null;
+                    },
                   ),
-                  child: const Text(
-                    'Save',
+                  TextFormField(
+                    // initialValue: _resta,
+                    decoration: InputDecoration(
+                      labelText: 'Restaurant',
+                    ),
+                    autofocus: true,
+                    controller: _restaEditingController,
+                    onChanged: (value) {
+                      setState(() {
+                        updatedResta = value;
+                      });
+                    },
+                    validator: (String? str) {
+                      if (str!.isEmpty) {
+                        return 'Please Insert Info';
+                      }
+                      return null;
+                    },
                   ),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      // create transaction data object
-                      var statement = Transactions(
-                          title: _titleEditingController.text,
-                          resta: _restaEditingController.text,
-                          rating: _rating,
-                          price: double.parse(_priceEditingController.text),
-                          date: DateTime.now());
+                  TextFormField(
+                    // initialValue: _price.toString(),
+                    decoration: const InputDecoration(
+                      labelText: 'Price',
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: _priceEditingController,
+                    onChanged: (value) {
+                      setState(() {
+                        updatedPrice = double.parse(value);
+                      });
+                    },
+                    validator: (String? input) {
+                      try {
+                        double price = double.parse(input!);
+                        if (price < 0) {
+                          return 'Insert More Than or Equals 0';
+                        }
+                      } catch (e) {
+                        return 'Please Insert Number';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  RatingBar.builder(
+                    initialRating: dRating,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                      updatedRating = rating;
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 0, 150, 255),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text(
+                        'Save',
+                      ),
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          // create transaction data object
+                          var dStatement = Transactions(
+                              title: dTitle,
+                              resta: dResta,
+                              rating: dRating,
+                              price: dPrice,
+                              date: dDate);
 
-                      // add transaction data object to provider
-                      var provider = Provider.of<TransactionProvider>(context,
-                          listen: false);
+                          var updatedStatement = Transactions(
+                              title: updatedTitle,
+                              resta: updatedResta,
+                              rating: updatedRating,
+                              price: updatedPrice,
+                              date: dDate);
 
-                      provider.editTransaction(statement);
-                      print(statement.title);
-                      print(statement.resta);
-                      print(statement.rating);
-                      print(statement.price);
-                      print(statement.date);
-                      Navigator.pop(context);
-                    }
-                  })
-            ])),
-      ),
-    );
+                          // add transaction data object to provider
+                          var provider = Provider.of<TransactionProvider>(
+                              context,
+                              listen: false);
+
+                          provider.updateTransaction(
+                              dStatement, updatedStatement);
+
+                          Navigator.pop(context);
+                        }
+                      })
+                ])),
+          ),
+        ));
   }
 }
