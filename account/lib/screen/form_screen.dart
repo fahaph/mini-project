@@ -6,7 +6,6 @@ import 'package:account/provider/transaction_provider.dart';
 
 // ignore: must_be_immutable
 class FormScreen extends StatelessWidget {
-
   double _rating = 3;
 
   FormScreen({super.key});
@@ -20,6 +19,14 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 0, 150, 255),
+          elevation: 15,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(5),
+              bottomRight: Radius.circular(5),
+            ),
+          ),
           title: const Text(
             'Form',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -27,7 +34,6 @@ class FormScreen extends StatelessWidget {
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
-          backgroundColor: Color.fromARGB(255, 0, 150, 255),
         ),
         body: Padding(
           padding: EdgeInsets.all(20),
@@ -48,7 +54,6 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Restaurant',
@@ -62,7 +67,6 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Price',
@@ -81,9 +85,7 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-
                   SizedBox(height: 15),
-
                   RatingBar.builder(
                     initialRating: 3,
                     minRating: 1,
@@ -98,12 +100,9 @@ class FormScreen extends StatelessWidget {
                     onRatingUpdate: (rating) {
                       print(rating);
                       _rating = rating;
-
                     },
                   ),
-
                   SizedBox(height: 15),
-
                   TextButton(
                       style: TextButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 0, 150, 255),
