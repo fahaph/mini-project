@@ -18,7 +18,8 @@ class Menus extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
@@ -63,12 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
             bottomRight: Radius.circular(5),
           ),
         ),
-
         title: Text(
           widget.title,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -97,6 +96,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                   child: ListTile(
+                    onLongPress: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: Text(
+                                    '${statement.title} - ${statement.resta}'),
+                                content:
+                                    Text('Are you sure you want to edit it?'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        // provider.deleteTransaction(statement);
+                                      },
+                                      child: Text('Edit'),
+                                      style: TextButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.green)),
+                                ],
+                              ));
+                    },
                     title: Text('${statement.title} - ${statement.resta}'),
                     subtitle: Text(DateFormat('dd/MM/yyyy hh:mm:ss aaa')
                         .format(statement.date)),
@@ -113,10 +138,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                                  title: Text('${statement.title} - ${statement.resta}'),
+                                  title: Text(
+                                      '${statement.title} - ${statement.resta}'),
                                   content: Text(
                                       'Are you sure you want to delete it?'),
                                   actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancel')),
                                     TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
@@ -126,11 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                         style: TextButton.styleFrom(
                                             foregroundColor: Colors.white,
                                             backgroundColor: Colors.red)),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('Cancel')),
                                   ],
                                 ));
                       },
