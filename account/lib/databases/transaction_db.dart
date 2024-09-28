@@ -38,14 +38,20 @@ class TransactionDB {
     return keyID;
   }
 
-  Future deleteDatabase(int index) async{
+  Future deleteDatabase(Transactions transaction) async{
     // เปิด database บันทึกไว้ที่ db
     var db = await this.openDatabase();
     //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
-    // var store = intMapStoreFactory.store('expense');
+    var store = intMapStoreFactory.store('expense');
     
     // json
-    // await store.record(1).delete(db);
+    await store.delete(db, finder: Finder(
+      filter: Filter.and([
+        Filter.equals('title', transaction.title),
+        Filter.equals('amount', transaction.amount),
+        Filter.equals('date', transaction.date.toIso8601String()),
+      ])
+    ));
 
     db.close();
     // return keyID;

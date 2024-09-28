@@ -14,7 +14,7 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('แบบฟอร์มข้อมูล', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          title: const Text('Form', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
