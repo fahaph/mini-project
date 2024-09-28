@@ -14,7 +14,6 @@ class FormScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final restaController = TextEditingController();
-  final ratingController = TextEditingController();
   final priceController = TextEditingController();
 
   @override
