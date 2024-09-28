@@ -97,13 +97,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                   child: ListTile(
-                    title: Text(statement.title),
-                    subtitle: Text(DateFormat('MM/dd/yyyy hh:mm:ss')
+                    title: Text('${statement.title} - ${statement.resta}'),
+                    subtitle: Text(DateFormat('dd/MM/yyyy hh:mm:ss aaa')
                         .format(statement.date)),
                     leading: CircleAvatar(
-                      radius: 20,
+                      radius: 30,
+                      backgroundColor: const Color.fromARGB(124, 255, 230, 146),
                       child: FittedBox(
-                        child: Text('${statement.price}'),
+                        child: Text('${statement.rating}/5.0'),
                       ),
                     ),
                     trailing: IconButton(
@@ -112,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                                  title: Text(statement.title),
+                                  title: Text('${statement.title} - ${statement.resta}'),
                                   content: Text(
                                       'Are you sure you want to delete it?'),
                                   actions: [

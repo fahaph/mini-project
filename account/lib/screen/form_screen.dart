@@ -1,9 +1,14 @@
 import 'package:account/models/transactions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
+// ignore: must_be_immutable
 class FormScreen extends StatelessWidget {
+
+  double _rating = 3.0; // Add this variable at the beginning of your class
+
   FormScreen({super.key});
 
   final formKey = GlobalKey<FormState>();
@@ -16,11 +21,14 @@ class FormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Form', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          title: const Text(
+            'Form',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
-          backgroundColor:Color.fromARGB(255, 0, 150, 255),
+          backgroundColor: Color.fromARGB(255, 0, 150, 255),
         ),
         body: Padding(
           padding: EdgeInsets.all(20),
@@ -41,6 +49,7 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
+
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Restaurant',
@@ -54,24 +63,7 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Rating',
-                    ),
-                    keyboardType: TextInputType.number,
-                    controller: ratingController,
-                    validator: (String? input) {
-                      try {
-                        double rating = double.parse(input!);
-                        if (rating < 0) {
-                          return 'Insert More Than or Equals 0';
-                        }
-                      } catch (e) {
-                        return 'Please Insert Number';
-                      }
-                      return null;
-                    },
-                  ),
+                  
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Price',
@@ -90,12 +82,34 @@ class FormScreen extends StatelessWidget {
                       return null;
                     },
                   ),
+
                   SizedBox(height: 15),
+
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                      _rating = rating;
+
+                    },
+                  ),
+
+                  SizedBox(height: 15),
+                  
                   TextButton(
                       style: TextButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 0, 150, 255),
-                          foregroundColor: Colors.white,
-                        ),
+                        backgroundColor: Color.fromARGB(255, 0, 150, 255),
+                        foregroundColor: Colors.white,
+                      ),
                       child: const Text(
                         'บันทึก',
                       ),
@@ -105,7 +119,7 @@ class FormScreen extends StatelessWidget {
                           var statement = Transactions(
                               title: titleController.text,
                               resta: restaController.text,
-                              rating: double.parse(ratingController.text),
+                              rating: _rating,
                               price: double.parse(priceController.text),
                               date: DateTime.now());
 
