@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:account/models/transactions.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-// import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class TransactionDB {
@@ -31,7 +30,9 @@ class TransactionDB {
     // json
     var keyID = store.add(db, {
       "title": transaction.title,
-      "amount": transaction.amount,
+      "resta": transaction.resta,
+      "rating": transaction.rating,
+      "price": transaction.price,
       "date": transaction.date.toIso8601String(),
     });
     db.close();
@@ -48,7 +49,9 @@ class TransactionDB {
     await store.delete(db, finder: Finder(
       filter: Filter.and([
         Filter.equals('title', transaction.title),
-        Filter.equals('amount', transaction.amount),
+        Filter.equals('resta', transaction.resta),
+        Filter.equals('rating', transaction.rating),
+        Filter.equals('price', transaction.price),
         Filter.equals('date', transaction.date.toIso8601String()),
       ])
     ));
@@ -73,7 +76,9 @@ class TransactionDB {
     for (var record in snapshot) {
       transactionList.add(Transactions(
         title: record['title'].toString(),
-        amount: double.parse(record['amount'].toString()),
+        resta: record['resta'].toString(),
+        rating: double.parse(record['rating'].toString()),
+        price: double.parse(record['price'].toString()),
         date: DateTime.parse(record['date'].toString()),
       ));
     }

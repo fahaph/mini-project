@@ -8,7 +8,9 @@ class FormScreen extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final restaController = TextEditingController();
+  final ratingController = TextEditingController();
+  final priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,32 +30,62 @@ class FormScreen extends StatelessWidget {
                 children: [
                   TextFormField(
                     decoration: InputDecoration(
-                      labelText: 'ชื่อรายการ',
+                      labelText: 'Menu',
                     ),
                     autofocus: true,
                     controller: titleController,
                     validator: (String? str) {
                       if (str!.isEmpty) {
-                        return 'กรุณากรอกข้อมูล';
+                        return 'Please Insert Info';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Restaurant',
+                    ),
+                    autofocus: true,
+                    controller: restaController,
+                    validator: (String? str) {
+                      if (str!.isEmpty) {
+                        return 'Please Insert Info';
                       }
                       return null;
                     },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'จำนวนเงิน',
-                      // focusColor: Color.fromARGB(255, 0, 150, 255),
+                      labelText: 'Rating',
                     ),
                     keyboardType: TextInputType.number,
-                    controller: amountController,
+                    controller: ratingController,
                     validator: (String? input) {
                       try {
-                        double amount = double.parse(input!);
-                        if (amount < 0) {
-                          return 'กรุณากรอกข้อมูลมากกว่า 0';
+                        double rating = double.parse(input!);
+                        if (rating < 0) {
+                          return 'Insert More Than or Equals 0';
                         }
                       } catch (e) {
-                        return 'กรุณากรอกข้อมูลเป็นตัวเลข';
+                        return 'Please Insert Number';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Price',
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: priceController,
+                    validator: (String? input) {
+                      try {
+                        double price = double.parse(input!);
+                        if (price < 0) {
+                          return 'Insert More Than or Equals 0';
+                        }
+                      } catch (e) {
+                        return 'Please Insert Number';
                       }
                       return null;
                     },
@@ -67,13 +99,14 @@ class FormScreen extends StatelessWidget {
                       child: const Text(
                         'บันทึก',
                       ),
-                      
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           // create transaction data object
                           var statement = Transactions(
                               title: titleController.text,
-                              amount: double.parse(amountController.text),
+                              resta: restaController.text,
+                              rating: double.parse(ratingController.text),
+                              price: double.parse(priceController.text),
                               date: DateTime.now());
 
                           // add transaction data object to provider

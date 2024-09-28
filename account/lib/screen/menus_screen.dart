@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class Menus extends StatelessWidget {
+  const Menus({super.key});
 
   // This widget is the root of your application.
   @override
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: CircleAvatar(
                       radius: 20,
                       child: FittedBox(
-                        child: Text('${statement.amount}'),
+                        child: Text('${statement.price}'),
                       ),
                     ),
                     trailing: IconButton(
