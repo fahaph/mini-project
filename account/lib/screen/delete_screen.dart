@@ -1,56 +1,25 @@
-import 'package:account/screen/delete_screen.dart';
 import 'package:account/screen/edit_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:account/screen/form_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
-class Menus extends StatelessWidget {
-  const Menus({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) {
-          return TransactionProvider();
-        }),
-      ],
-      child: MaterialApp(
-        
-        theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 0, 150, 255)),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-        title: '',
-        home: const MyHomePage(title: 'Menu'),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class DeleteScreen extends StatefulWidget {
+  const DeleteScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<DeleteScreen> createState() => _DeleteScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DeleteScreenState extends State<DeleteScreen> {
   // โหลดข้อมูลก่อนสร้างหน้าต่าง
   @override
   void initState() {
     super.initState();
-
     // น่าจะเป็นการสร้างตัวแปรที่ดึงข้อมูลจาก class TransactionProvider ได้
     var provider = Provider.of<TransactionProvider>(context, listen: false);
-
     // เรียกใช้ initData() จาก class TransactionProvider
     provider.initData();
   }
@@ -60,10 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context){
-            return DeleteScreen(title: 'Delete');
-          }));
-          // DeleteScreen(title: 'Delete');
+          
         },
         backgroundColor: Color.fromARGB(255, 0, 150, 255),
         child: Icon(Icons.delete),
@@ -77,21 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
             bottomRight: Radius.circular(5),
           ),
         ),
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Text('Delete', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
+        iconTheme: IconThemeData(
             color: Colors.white,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return FormScreen();
-              }));
-            },
-          )
-        ],
+          ),
       ),
       body: Consumer<TransactionProvider>(
         builder: (context, provider, Widget? child) {
