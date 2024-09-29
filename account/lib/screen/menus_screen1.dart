@@ -69,8 +69,8 @@ class _MenusScreen1State extends State<MenusScreen1> {
         title: Row(children: [
           Image.asset(
             'assets/icon/icon2.png',
-            width: 30,
-            height: 30,
+            width: 40,
+            height: 40,
           ),
           SizedBox(
             width: 15,
