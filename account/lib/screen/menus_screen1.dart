@@ -58,6 +58,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 15,
         backgroundColor: Color.fromARGB(255, 0, 150, 255),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

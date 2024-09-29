@@ -95,18 +95,20 @@ class _EditScreenState extends State<EditScreen> {
           ),
           title: const Text(
             'Edit',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Form(
                 key: formKey,
                 child: Column(children: [
+                  SizedBox(height: 20,),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Menu',
