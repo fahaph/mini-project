@@ -31,6 +31,8 @@ flutter_lints: ^3.0.0
 flutter:
   assets:
       - assets/
+      - assets/images/
+      - assets/icon/
   uses-material-design: true
 
 flutter_icons:

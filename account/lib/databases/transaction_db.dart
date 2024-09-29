@@ -34,6 +34,7 @@ class TransactionDB {
       "rating": transaction.rating,
       "price": transaction.price,
       "date": transaction.date.toIso8601String(),
+      "imgPath": transaction.imgPath
     });
     db.close();
     return keyID;
@@ -54,6 +55,7 @@ class TransactionDB {
           Filter.equals('rating', transaction.rating),
           Filter.equals('price', transaction.price),
           Filter.equals('date', transaction.date.toIso8601String()),
+          Filter.equals('imgPath', transaction.imgPath),
         ])));
 
     db.close();
@@ -74,6 +76,7 @@ class TransactionDB {
       Filter.equals('rating', dTransaction.rating),
       Filter.equals('price', dTransaction.price),
       Filter.equals('date', dTransaction.date.toIso8601String()),
+      Filter.equals('imgPath', dTransaction.imgPath),
     ]));
 
     // ค้นหาว่า record ที่ต้องการอัปเดตมีอยู่หรือไม่
@@ -124,6 +127,7 @@ class TransactionDB {
         rating: double.parse(record['rating'].toString()),
         price: double.parse(record['price'].toString()),
         date: DateTime.parse(record['date'].toString()),
+        imgPath: record['imgPath'].toString(),
       ));
     }
     return transactionList;

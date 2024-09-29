@@ -49,7 +49,6 @@ class _MenusScreenState extends State<MenusScreen> {
 
     // น่าจะเป็นการสร้างตัวแปรที่ดึงข้อมูลจาก class TransactionProvider ได้
     var provider = Provider.of<TransactionProvider>(context, listen: false);
-
     // เรียกใช้ initData() จาก class TransactionProvider
     provider.initData();
   }

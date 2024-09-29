@@ -19,11 +19,13 @@ class _EditScreenState extends State<EditScreen> {
   late final double dPrice;
   late final double dRating;
   late final DateTime dDate;
+  late final String dImgPath;
 
   late String? updatedTitle;
   late String? updatedResta;
   late double? updatedPrice;
   late double? updatedRating;
+  late String? updatedImgPath;
 
   late TextEditingController _titleEditingController;
   late TextEditingController _restaEditingController;
@@ -38,6 +40,7 @@ class _EditScreenState extends State<EditScreen> {
     dPrice = widget.dStatement.price;
     dRating = widget.dStatement.rating;
     dDate = widget.dStatement.date;
+    dImgPath = widget.dStatement.imgPath;
 
     _titleEditingController = TextEditingController(text: dTitle);
     _restaEditingController = TextEditingController(text: dResta);
@@ -47,6 +50,7 @@ class _EditScreenState extends State<EditScreen> {
     updatedResta = dResta;
     updatedPrice = dPrice;
     updatedRating = dRating;
+    updatedImgPath = dImgPath;
   }
 
   final formKey = GlobalKey<FormState>();
@@ -55,7 +59,7 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Color.fromARGB(255, 0, 150, 255),
           elevation: 15,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -151,6 +155,7 @@ class _EditScreenState extends State<EditScreen> {
                     direction: Axis.horizontal,
                     allowHalfRating: false,
                     itemCount: 5,
+                    glow: false,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                     itemBuilder: (context, _) => Icon(
                       Icons.star,
@@ -178,14 +183,16 @@ class _EditScreenState extends State<EditScreen> {
                               resta: dResta,
                               rating: dRating,
                               price: dPrice,
-                              date: dDate);
+                              date: dDate,
+                              imgPath: dImgPath);
 
                           var updatedStatement = Transactions(
                               title: updatedTitle!,
                               resta: updatedResta!,
                               rating: updatedRating!,
                               price: updatedPrice!,
-                              date: dDate);
+                              date: dDate,
+                              imgPath: updatedImgPath!);
 
                           // add transaction data object to provider
                           var provider = Provider.of<TransactionProvider>(
