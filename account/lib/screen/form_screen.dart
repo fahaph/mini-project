@@ -1,3 +1,4 @@
+import 'package:account/databases/img_path.dart';
 import 'package:account/models/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -7,7 +8,7 @@ import 'package:account/provider/transaction_provider.dart';
 // ignore: must_be_immutable
 class FormScreen extends StatelessWidget {
   double _rating = 3;
-  String _imgPath = '';
+  String _imgPath = 'assets/images/food.png';
 
   FormScreen({super.key});
 
@@ -15,6 +16,8 @@ class FormScreen extends StatelessWidget {
   final titleController = TextEditingController();
   final restaController = TextEditingController();
   final priceController = TextEditingController();
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,23 @@ class FormScreen extends StatelessWidget {
                           return null;
                         },
                       ),
+
+                      DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          label: Text("Type")
+                        ),
+                          value: ImgPath.food,
+                          items: ImgPath.values.map((key) {
+                            return DropdownMenuItem(
+                              value: key,
+                              child: Text(key.title));
+                          }).toList(),
+                          onChanged: (type) {
+                            _imgPath = type!.imgPath.toString();
+                            print(_imgPath);
+                          }
+                      ),
+
                       SizedBox(height: 15),
                       RatingBar.builder(
                         initialRating: 3,
@@ -115,7 +135,6 @@ class FormScreen extends StatelessWidget {
                             'Save',
                           ),
                           onPressed: () {
-
                             if (formKey.currentState!.validate()) {
                               // create transaction data object
                               var statement = Transactions(

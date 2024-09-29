@@ -86,11 +86,7 @@ class TransactionDB {
     if (recordSnapshot != null) {
       // ทำการอัปเดตข้อมูลใหม่ทับ record เดิม
       await store.record(recordSnapshot.key).update(db, updatedTransaction.toMap());
-      print('อัปเดตข้อมูลสำเร็จ');
-    } else {
-      print('ไม่พบข้อมูลเดิม');
     }
-
     db.close();
   }
 

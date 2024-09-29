@@ -1,3 +1,4 @@
+import 'package:account/databases/img_path.dart';
 import 'package:account/models/transactions.dart';
 import 'package:account/provider/transaction_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _EditScreenState extends State<EditScreen> {
   late final DateTime dDate;
   late final String dImgPath;
 
+  late ImgPath dEnum;
+
   late String? updatedTitle;
   late String? updatedResta;
   late double? updatedPrice;
@@ -41,6 +44,29 @@ class _EditScreenState extends State<EditScreen> {
     dRating = widget.dStatement.rating;
     dDate = widget.dStatement.date;
     dImgPath = widget.dStatement.imgPath;
+
+    switch (dImgPath) {
+      case 'assets/images/food.png':{
+        dEnum = ImgPath.food;
+      }
+      break;
+      case 'assets/images/fruit.png':{
+        dEnum = ImgPath.fruit;
+      }
+      break;
+      case 'assets/images/snack.png':{
+        dEnum = ImgPath.snack;
+      }
+      break;
+      case 'assets/images/beverage.png':{
+        dEnum = ImgPath.beverage;
+      }
+      break;
+      default:{
+        dEnum = ImgPath.food;
+      }
+      break;
+    }
 
     _titleEditingController = TextEditingController(text: dTitle);
     _restaEditingController = TextEditingController(text: dResta);
@@ -148,6 +174,23 @@ class _EditScreenState extends State<EditScreen> {
                       return null;
                     },
                   ),
+
+                  DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          label: Text("Type")
+                        ),
+                          value: dEnum,
+                          items: ImgPath.values.map((key) {
+                            return DropdownMenuItem(
+                              value: key,
+                              child: Text(key.title));
+                          }).toList(),
+                          onChanged: (type) {
+                            updatedImgPath = type!.imgPath.toString();
+                            print(updatedImgPath);
+                          }
+                      ),
+
                   SizedBox(height: 15),
                   RatingBar.builder(
                     initialRating: dRating,

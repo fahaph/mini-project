@@ -51,6 +51,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
 
     // เรียกใช้ initData() จาก class TransactionProvider
     provider.initData();
+
   }
 
   @override
@@ -125,7 +126,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/food.png',
+                        statement.imgPath,
                         width: 100,
                         height: 100,
                       ),
