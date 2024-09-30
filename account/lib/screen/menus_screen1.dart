@@ -52,7 +52,6 @@ class _MenusScreen1State extends State<MenusScreen1> {
 
     // เรียกใช้ initData() จาก class TransactionProvider
     provider.initData();
-
   }
 
   @override
@@ -105,11 +104,12 @@ class _MenusScreen1State extends State<MenusScreen1> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             child: GridView.builder(
               itemCount: provider.transactions.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                // crossAxisCount: 2,
+                maxCrossAxisExtent: 225,
                 // mainAxisSpacing: 10,
                 // crossAxisSpacing: 10,
-                childAspectRatio: 3 / 5,
+                childAspectRatio: 2.95 / 5,
               ),
               itemBuilder: (context, index) {
                 var statement = provider.transactions[index];
@@ -132,7 +132,11 @@ class _MenusScreen1State extends State<MenusScreen1> {
                         width: 100,
                         height: 100,
                       ),
-                      SizedBox(height: 4,),
+                      
+                      SizedBox(
+                        height: 4,
+                      ),
+
                       RatingBar.builder(
                         initialRating: statement.rating,
                         direction: Axis.horizontal,
@@ -150,126 +154,153 @@ class _MenusScreen1State extends State<MenusScreen1> {
                         },
                       ),
                       // Text(statement.rating.toString()),
-                      
+
                       Container(
-                        // color: Colors.red,
+                        // color: Colors.green,
                         width: 150,
-                        height: 27,
+                        height: 30,
                         child: Center(
                           child: AutoSizeText(
-                            statement.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500), 
+                            statement.title,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.w500),
                             maxLines: 1,
                             minFontSize: 1,
                           ),
                         ),
                       ),
-                      
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                              child: Text(' ${statement.resta}',
-                                  style: TextStyle(fontSize: 11.5)))
-                        ],
+
+                      Container(
+                        // color: Colors.blue,
+                        width: 150,
+                        height: 17,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              '  ${statement.resta}',
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              maxLines: 1,
+                              minFontSize: 1,
+                            )
+                          ],
+                        ),
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                              child: Text(' ${statement.price}฿',
-                                  style: TextStyle(fontSize: 11.5)))
-                        ],
+                      Container(
+                        // color: Colors.red,
+                        width: 150,
+                        height: 17,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              '  ${statement.price.toString()}',
+                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              maxLines: 1,
+                              minFontSize: 1,
+                            )
+                          ],
+                        ),
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              ' ${DateFormat('dd/MM/yy hh:mm aaa').format(statement.date)}',
-                              style: TextStyle(fontSize: 11),
+                      Container(
+                        // color: Colors.green,
+                        width: 150,
+                        height: 17,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              '  ${DateFormat('dd/MM/yy hh:mm aaa').format(statement.date)}',
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              maxLines: 1,
+                              minFontSize: 1,
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // FilledButton.icon(onPressed: onPressed, label: label)
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                        title: Text(
-                                            '${statement.title} - ${statement.resta}'),
-                                        content: Text(
-                                            'Are you sure you want to edit it'),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Cancel')),
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return EditScreen(
-                                                    dStatement: statement,
-                                                  );
-                                                }));
-                                                // provider.deleteTransaction(statement);
-                                              },
-                                              child: Text('Edit'),
-                                              style: TextButton.styleFrom(
-                                                  foregroundColor: Colors.white,
-                                                  backgroundColor:
-                                                      Color.fromARGB(
-                                                          255, 0, 150, 255))),
-                                        ],
-                                      ));
-                            },
-                            icon: Icon(Icons.edit),
-                            iconSize: 15,
-                            color: Color.fromARGB(255, 0, 150, 255),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                        title: Text(
-                                            '${statement.title} - ${statement.resta}'),
-                                        content: Text(
-                                            'Are you sure you want to delete it?'),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Text('Cancel')),
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                provider.deleteTransaction(
-                                                    statement);
-                                              },
-                                              child: Text('Delete'),
-                                              style: TextButton.styleFrom(
-                                                  foregroundColor: Colors.white,
-                                                  backgroundColor: Colors.red)),
-                                        ],
-                                      ));
-                            },
-                            icon: Icon(Icons.delete),
-                            iconSize: 15,
-                            color: Colors.red,
-                          ),
-                        ],
+
+                      Container(
+                        // color: Colors.green,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // FilledButton.icon(onPressed: onPressed, label: label)
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: Text(
+                                              '${statement.title} - ${statement.resta}'),
+                                          content: Text(
+                                              'Are you sure you want to edit it'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('Cancel')),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) {
+                                                    return EditScreen(
+                                                      dStatement: statement,
+                                                    );
+                                                  }));
+                                                  // provider.deleteTransaction(statement);
+                                                },
+                                                child: Text('Edit'),
+                                                style: TextButton.styleFrom(
+                                                    foregroundColor: Colors.white,
+                                                    backgroundColor:
+                                                        Color.fromARGB(
+                                                            255, 0, 150, 255))),
+                                          ],
+                                        ));
+                              },
+                              icon: Icon(Icons.edit),
+                              iconSize: 17,
+                              color: Color.fromARGB(255, 0, 150, 255),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                          title: Text(
+                                              '${statement.title} - ${statement.resta}'),
+                                          content: Text(
+                                              'Are you sure you want to delete it?'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('Cancel')),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  provider.deleteTransaction(
+                                                      statement);
+                                                },
+                                                child: Text('Delete'),
+                                                style: TextButton.styleFrom(
+                                                    foregroundColor: Colors.white,
+                                                    backgroundColor: Colors.red)),
+                                          ],
+                                        ));
+                              },
+                              icon: Icon(Icons.delete),
+                              iconSize: 17,
+                              color: Colors.red,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
