@@ -1,5 +1,6 @@
 import 'package:account/screen/edit_screen.dart';
 import 'package:account/screen/form_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
@@ -149,17 +150,20 @@ class _MenusScreen1State extends State<MenusScreen1> {
                         },
                       ),
                       // Text(statement.rating.toString()),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                              child: Text(
-                            statement.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 18),
-                          ))
-                        ],
+                      
+                      Container(
+                        // color: Colors.red,
+                        width: 150,
+                        height: 27,
+                        child: Center(
+                          child: AutoSizeText(
+                            statement.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500), 
+                            maxLines: 1,
+                            minFontSize: 1,
+                          ),
+                        ),
                       ),
+                      
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
