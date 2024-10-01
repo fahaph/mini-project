@@ -28,7 +28,8 @@ class TransactionDB {
     var store = intMapStoreFactory.store('expense');
 
     // json
-    var keyID = store.add(db, {
+    var keyID = await store.add(db, {
+      "keyID": transaction.keyID,
       "title": transaction.title,
       "resta": transaction.resta,
       "rating": transaction.rating,
@@ -36,28 +37,33 @@ class TransactionDB {
       "date": transaction.date.toIso8601String(),
       "imgPath": transaction.imgPath
     });
+
+    print('Added new transaction (keyID: ${keyID})');
     db.close();
     return keyID;
   }
 
-  Future deleteDatabase(Transactions transaction) async {
+  Future deleteDatabase(int keyID) async {
     // เปิด database บันทึกไว้ที่ db
     var db = await this.openDatabase();
     //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
     var store = intMapStoreFactory.store('expense');
 
-    // json
-    await store.delete(db,
-        finder: Finder(
-            filter: Filter.and([
-          Filter.equals('title', transaction.title),
-          Filter.equals('resta', transaction.resta),
-          Filter.equals('rating', transaction.rating),
-          Filter.equals('price', transaction.price),
-          Filter.equals('date', transaction.date.toIso8601String()),
-          Filter.equals('imgPath', transaction.imgPath),
-        ])));
+    await store.delete(db, finder: Finder(filter: Filter.equals(Field.key, keyID)));
 
+    // json
+    // await store.delete(db,
+    //     finder: Finder(
+    //         filter: Filter.and([
+    //       Filter.equals('title', transaction.title),
+    //       Filter.equals('resta', transaction.resta),
+    //       Filter.equals('rating', transaction.rating),
+    //       Filter.equals('price', transaction.price),
+    //       Filter.equals('date', transaction.date.toIso8601String()),
+    //       Filter.equals('imgPath', transaction.imgPath),
+    //     ])));
+
+    print('Deleted (keyID: ${keyID})');
     db.close();
     // return keyID;
   }
@@ -90,18 +96,6 @@ class TransactionDB {
     db.close();
   }
 
-// // ค้นหาว่า record ที่ต้องการอัปเดตมีอยู่หรือไม่
-  // final recordSnapshot = await store.findFirst(db, finder: finder);
-
-  // // ถ้าพบ record ที่ต้องการ
-  // if (recordSnapshot != null) {
-  //   // ทำการอัปเดตข้อมูลใหม่ทับ record เดิม
-  //   await store.record(recordSnapshot.key).update(db, updatedTransaction); // อัปเดตข้อมูลใหม่
-  //   print('Database Updated');
-  // } else {
-  //   print('Database Not Found');
-  // }
-
   Future<List<Transactions>> loadAllData() async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');
@@ -110,14 +104,13 @@ class TransactionDB {
     var snapshot = await store.find(db,
         finder: Finder(sortOrders: [SortOrder(Field.key, false)]));
 
-    // print(snapshot);
-
     // สร้างตัวแปรไว้เก็บข้อมูล transaction
     List<Transactions> transactionList = [];
 
     // ลูปเพิ่มข้อมูลจาก snapshot ไปยังตัวแปร transactionList
     for (var record in snapshot) {
       transactionList.add(Transactions(
+        keyID: record.key,
         title: record['title'].toString(),
         resta: record['resta'].toString(),
         rating: double.parse(record['rating'].toString()),
@@ -126,6 +119,7 @@ class TransactionDB {
         imgPath: record['imgPath'].toString(),
       ));
     }
+    print(snapshot);
     return transactionList;
   }
 }

@@ -286,7 +286,8 @@ class _MenusScreen1State extends State<MenusScreen1> {
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                   provider.deleteTransaction(
-                                                      statement);
+                                                      statement.keyID!);
+                                                  // print('deleting by keyID: ${statement.keyID}');
                                                 },
                                                 child: Text('Delete'),
                                                 style: TextButton.styleFrom(

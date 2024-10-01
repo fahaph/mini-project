@@ -147,7 +147,6 @@ class _EditScreenState extends State<EditScreen> {
                     },
                   ),
                   TextFormField(
-                    // initialValue: _price.toString(),
                     decoration: const InputDecoration(
                       labelText: 'Price',
                     ),
@@ -189,7 +188,7 @@ class _EditScreenState extends State<EditScreen> {
                           }).toList(),
                           onChanged: (type) {
                             updatedImgPath = type!.imgPath.toString();
-                            print(updatedImgPath);
+                            // print(updatedImgPath);
                           }
                       ),
 
@@ -207,7 +206,7 @@ class _EditScreenState extends State<EditScreen> {
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (rating) {
-                      print(rating);
+                      // print(rating);
                       updatedRating = rating;
                     },
                   ),

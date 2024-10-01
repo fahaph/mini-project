@@ -1,4 +1,5 @@
 class Transactions {
+  final int? keyID;
   final String title;
   final String resta;
   final double rating;
@@ -7,6 +8,7 @@ class Transactions {
   final String imgPath;
 
   Transactions({
+    this.keyID,
     required this.title,
     required this.resta,
     required this.rating,
@@ -17,6 +19,7 @@ class Transactions {
 
   Map<String, dynamic> toMap() {
     return {
+      'keyID': keyID,
       'title': title,
       'resta': resta,
       'rating': rating,

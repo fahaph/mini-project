@@ -123,7 +123,7 @@ class FormScreen extends StatelessWidget {
                           color: Colors.amber,
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                          // print(rating);
                           _rating = rating;
                         },
                       ),
@@ -140,6 +140,7 @@ class FormScreen extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               // create transaction data object
                               var statement = Transactions(
+                                  // keyID: ,
                                   title: titleController.text,
                                   resta: restaController.text,
                                   rating: _rating,

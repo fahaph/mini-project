@@ -18,17 +18,17 @@ class TransactionProvider with ChangeNotifier {
 
   void addTransaction(Transactions transaction) async{
     var db = await TransactionDB(dbName: 'transactions.db');
-    var keyID = await db.insertDatabase(transaction);
-    transactions = await db.loadAllData();
 
-    print('keyID: $keyID');
+    // var keyID = 
+    await db.insertDatabase(transaction);
+    transactions = await db.loadAllData();
 
     notifyListeners();
   }
 
-  void deleteTransaction(Transactions transaction) async{
+  void deleteTransaction(int keyID) async{
     var db = await TransactionDB(dbName: 'transactions.db');
-    await db.deleteDatabase(transaction);
+    await db.deleteDatabase(keyID);
     transactions = await db.loadAllData();
 
     notifyListeners(); 
