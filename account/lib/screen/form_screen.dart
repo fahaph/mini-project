@@ -53,7 +53,7 @@ class FormScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Menu',
                         ),
-                        autofocus: true,
+                        autofocus: false,
                         controller: titleController,
                         validator: (String? str) {
                           if (str!.isEmpty) {
@@ -66,7 +66,7 @@ class FormScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Restaurant',
                         ),
-                        autofocus: true,
+                        autofocus: false,
                         controller: restaController,
                         validator: (String? str) {
                           if (str!.isEmpty) {
