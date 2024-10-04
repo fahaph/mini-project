@@ -7,35 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
-class Menus1 extends StatelessWidget {
-  const Menus1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) {
-          return TransactionProvider();
-        }),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Color.fromARGB(255, 219, 219, 219),
-          colorSchemeSeed: Color.fromARGB(255, 0, 150, 255),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-        title: '',
-        home: const MenusScreen1(title: 'Yummie'),
-      ),
-    );
-  }
-}
-// ==============================================================================================================
-
 class MenusScreen1 extends StatefulWidget {
-  const MenusScreen1({super.key, required this.title});
-  final String title;
+  const MenusScreen1({super.key});
 
   @override
   State<MenusScreen1> createState() => _MenusScreen1State();
@@ -43,16 +16,6 @@ class MenusScreen1 extends StatefulWidget {
 // ==============================================================================================================
 
 class _MenusScreen1State extends State<MenusScreen1> {
-  @override
-  void initState() {
-    super.initState();
-
-    // น่าจะเป็นการสร้างตัวแปรที่ดึงข้อมูลจาก class TransactionProvider ได้
-    var provider = Provider.of<TransactionProvider>(context, listen: false);
-
-    // เรียกใช้ initData() จาก class TransactionProvider
-    provider.initData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +39,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
             width: 15,
           ),
           Text(
-            widget.title,
+            'Yummie',
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),

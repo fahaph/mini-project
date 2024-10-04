@@ -1,4 +1,5 @@
 import 'package:account/databases/img_path.dart';
+import 'package:account/main.dart';
 import 'package:account/models/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -155,7 +156,14 @@ class FormScreen extends StatelessWidget {
 
                               provider.addTransaction(statement);
 
-                              Navigator.pop(context);
+                              Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return MyHomePage();
+                              },
+                            ),
+                          );
                             }
                           })
                     ],

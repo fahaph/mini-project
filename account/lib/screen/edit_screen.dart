@@ -1,5 +1,5 @@
 import 'package:account/databases/img_path.dart';
-// import 'package:account/main.dart';
+import 'package:account/main.dart';
 import 'package:account/models/transactions.dart';
 import 'package:account/provider/transaction_provider.dart';
 import 'package:flutter/material.dart';
@@ -248,7 +248,14 @@ class _EditScreenState extends State<EditScreen> {
                           provider.updateTransaction(
                               dStatement, updatedStatement);
 
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return MyHomePage();
+                              },
+                            ),
+                          );
                         }
                       })
                 ])),
