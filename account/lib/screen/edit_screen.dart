@@ -1,4 +1,5 @@
 import 'package:account/databases/img_path.dart';
+// import 'package:account/main.dart';
 import 'package:account/models/transactions.dart';
 import 'package:account/provider/transaction_provider.dart';
 import 'package:flutter/material.dart';
@@ -46,26 +47,31 @@ class _EditScreenState extends State<EditScreen> {
     dImgPath = widget.dStatement.imgPath;
 
     switch (dImgPath) {
-      case 'assets/images/food.png':{
-        dEnum = ImgPath.food;
-      }
-      break;
-      case 'assets/images/fruit.png':{
-        dEnum = ImgPath.fruit;
-      }
-      break;
-      case 'assets/images/snack.png':{
-        dEnum = ImgPath.snack;
-      }
-      break;
-      case 'assets/images/beverage.png':{
-        dEnum = ImgPath.beverage;
-      }
-      break;
-      default:{
-        dEnum = ImgPath.food;
-      }
-      break;
+      case 'assets/images/food.png':
+        {
+          dEnum = ImgPath.food;
+        }
+        break;
+      case 'assets/images/fruit.png':
+        {
+          dEnum = ImgPath.fruit;
+        }
+        break;
+      case 'assets/images/snack.png':
+        {
+          dEnum = ImgPath.snack;
+        }
+        break;
+      case 'assets/images/beverage.png':
+        {
+          dEnum = ImgPath.beverage;
+        }
+        break;
+      default:
+        {
+          dEnum = ImgPath.food;
+        }
+        break;
     }
 
     _titleEditingController = TextEditingController(text: dTitle);
@@ -108,7 +114,9 @@ class _EditScreenState extends State<EditScreen> {
             child: Form(
                 key: formKey,
                 child: Column(children: [
-                  SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Menu',
@@ -175,23 +183,17 @@ class _EditScreenState extends State<EditScreen> {
                       return null;
                     },
                   ),
-
                   DropdownButtonFormField(
-                        decoration: InputDecoration(
-                          label: Text("Type")
-                        ),
-                          value: dEnum,
-                          items: ImgPath.values.map((key) {
-                            return DropdownMenuItem(
-                              value: key,
-                              child: Text(key.title));
-                          }).toList(),
-                          onChanged: (type) {
-                            updatedImgPath = type!.imgPath.toString();
-                            // print(updatedImgPath);
-                          }
-                      ),
-
+                      decoration: InputDecoration(label: Text("Type")),
+                      value: dEnum,
+                      items: ImgPath.values.map((key) {
+                        return DropdownMenuItem(
+                            value: key, child: Text(key.title));
+                      }).toList(),
+                      onChanged: (type) {
+                        updatedImgPath = type!.imgPath.toString();
+                        // print(updatedImgPath);
+                      }),
                   SizedBox(height: 15),
                   RatingBar.builder(
                     initialRating: dRating,
