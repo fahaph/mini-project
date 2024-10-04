@@ -44,17 +44,6 @@ class _MenusScreen1State extends State<MenusScreen1> {
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ]),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return FormScreen();
-              }));
-            },
-          )
-        ],
       ),
       body: Consumer<TransactionProvider>(
           builder: (context, provider, Widget? child) {
