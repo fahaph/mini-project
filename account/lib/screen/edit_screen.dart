@@ -8,87 +8,65 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class EditScreen extends StatefulWidget {
-  final Transactions dStatement;
-  EditScreen({required this.dStatement});
+  final Transactions statement;
+  EditScreen({required this.statement});
   // super.key,
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
-  late final String dTitle;
-  late final String dResta;
-  late final double dPrice;
-  late final double dRating;
-  late final DateTime dDate;
-  late final String dImgPath;
+  final formKey = GlobalKey<FormState>();
 
-  late ImgPath dEnum;
+  var Enum = ImgPath.food;
 
-  late String? updatedTitle;
-  late String? updatedResta;
-  late double? updatedPrice;
-  late double? updatedRating;
-  late String? updatedImgPath;
-
-  late TextEditingController _titleEditingController;
-  late TextEditingController _restaEditingController;
-  late TextEditingController _priceEditingController;
+  final titleController = TextEditingController();
+  final restaController = TextEditingController();
+  final priceController = TextEditingController();
+  late double _rating = 0;
+  late String imgPath;
 
   @override
   // ฟังก์ชั่นติดตั้งข้อมูลเบื้องต้น เมื่อที่นี่เริ่มทำงาน
   void initState() {
     super.initState();
-    dTitle = widget.dStatement.title;
-    dResta = widget.dStatement.resta;
-    dPrice = widget.dStatement.price;
-    dRating = widget.dStatement.rating;
-    dDate = widget.dStatement.date;
-    dImgPath = widget.dStatement.imgPath;
+    imgPath = widget.statement.imgPath;
+    _rating = widget.statement.rating;
 
-    switch (dImgPath) {
+    switch (imgPath) {
       case 'assets/images/food.png':
         {
-          dEnum = ImgPath.food;
+          Enum = ImgPath.food;
         }
         break;
       case 'assets/images/fruit.png':
         {
-          dEnum = ImgPath.fruit;
+          Enum = ImgPath.fruit;
         }
         break;
       case 'assets/images/snack.png':
         {
-          dEnum = ImgPath.snack;
+          Enum = ImgPath.snack;
         }
         break;
       case 'assets/images/beverage.png':
         {
-          dEnum = ImgPath.beverage;
+          Enum = ImgPath.beverage;
         }
         break;
       default:
         {
-          dEnum = ImgPath.food;
+          Enum = ImgPath.food;
         }
         break;
     }
-
-    _titleEditingController = TextEditingController(text: dTitle);
-    _restaEditingController = TextEditingController(text: dResta);
-    _priceEditingController = TextEditingController(text: dPrice.toString());
-
-    updatedTitle = dTitle;
-    updatedResta = dResta;
-    updatedPrice = dPrice;
-    updatedRating = dRating;
-    updatedImgPath = dImgPath;
   }
-
-  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    titleController.text = widget.statement.title;
+    restaController.text = widget.statement.resta;
+    priceController.text = widget.statement.price.toString();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 0, 150, 255),
@@ -122,12 +100,7 @@ class _EditScreenState extends State<EditScreen> {
                       labelText: 'Menu',
                     ),
                     autofocus: true,
-                    controller: _titleEditingController,
-                    onChanged: (value) {
-                      setState(() {
-                        updatedTitle = value;
-                      });
-                    },
+                    controller: titleController,
                     validator: (String? str) {
                       if (str!.isEmpty) {
                         return 'Please Insert Info';
@@ -141,12 +114,7 @@ class _EditScreenState extends State<EditScreen> {
                       labelText: 'Restaurant',
                     ),
                     autofocus: true,
-                    controller: _restaEditingController,
-                    onChanged: (value) {
-                      setState(() {
-                        updatedResta = value;
-                      });
-                    },
+                    controller: restaController,
                     validator: (String? str) {
                       if (str!.isEmpty) {
                         return 'Please Insert Info';
@@ -159,18 +127,7 @@ class _EditScreenState extends State<EditScreen> {
                       labelText: 'Price',
                     ),
                     keyboardType: TextInputType.number,
-                    controller: _priceEditingController,
-                    onChanged: (value) {
-                      setState(() {
-                        // เช็ค null
-                        if (value.isEmpty) {
-                          updatedPrice = 0.0;
-                        } else {
-                          updatedPrice = double.parse(value);
-                        }
-                        // updatedPrice = double.parse(value);
-                      });
-                    },
+                    controller: priceController,
                     validator: (String? input) {
                       try {
                         double price = double.parse(input!);
@@ -185,18 +142,18 @@ class _EditScreenState extends State<EditScreen> {
                   ),
                   DropdownButtonFormField(
                       decoration: InputDecoration(label: Text("Type")),
-                      value: dEnum,
+                      value: Enum,
                       items: ImgPath.values.map((key) {
                         return DropdownMenuItem(
                             value: key, child: Text(key.title));
                       }).toList(),
                       onChanged: (type) {
-                        updatedImgPath = type!.imgPath.toString();
+                        imgPath = type!.imgPath.toString();
                         // print(updatedImgPath);
                       }),
                   SizedBox(height: 15),
                   RatingBar.builder(
-                    initialRating: dRating,
+                    initialRating: widget.statement.rating,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
@@ -209,7 +166,7 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                     onRatingUpdate: (rating) {
                       // print(rating);
-                      updatedRating = rating;
+                      _rating = rating;
                     },
                   ),
                   SizedBox(height: 15),
@@ -224,29 +181,21 @@ class _EditScreenState extends State<EditScreen> {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           // create transaction data object
-                          var dStatement = Transactions(
-                              title: dTitle,
-                              resta: dResta,
-                              rating: dRating,
-                              price: dPrice,
-                              date: dDate,
-                              imgPath: dImgPath);
-
-                          var updatedStatement = Transactions(
-                              title: updatedTitle!,
-                              resta: updatedResta!,
-                              rating: updatedRating!,
-                              price: updatedPrice!,
-                              date: dDate,
-                              imgPath: updatedImgPath!);
+                          var statement = Transactions(
+                              keyID: widget.statement.keyID,
+                              title: titleController.text,
+                              resta: restaController.text,
+                              rating: _rating,
+                              price: double.parse(priceController.text),
+                              date: widget.statement.date,
+                              imgPath: imgPath);
 
                           // add transaction data object to provider
                           var provider = Provider.of<TransactionProvider>(
                               context,
                               listen: false);
 
-                          provider.updateTransaction(
-                              dStatement, updatedStatement);
+                          provider.updateTransaction(statement);
 
                           Navigator.pushReplacement(
                             context,

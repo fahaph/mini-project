@@ -199,7 +199,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
                                                       MaterialPageRoute(
                                                           builder: (context) {
                                                     return EditScreen(
-                                                      dStatement: statement,
+                                                      statement: statement,
                                                     );
                                                   }));
                                                   // provider.deleteTransaction(statement);

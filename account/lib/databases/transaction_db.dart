@@ -68,32 +68,48 @@ class TransactionDB {
     // return keyID;
   }
 
-  Future updateDatabase(Transactions dTransaction, Transactions updatedTransaction) async {
-    // เปิด database บันทึกไว้ที่ db
+  // Future updateDatabase(Transactions dTransaction, Transactions updatedTransaction) async {
+  //   // เปิด database บันทึกไว้ที่ db
+  //   var db = await this.openDatabase();
+  //   //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
+  //   var store = intMapStoreFactory.store('expense');
+
+  //   // ค้นหาข้อมูลที่ตรงกับ dTransaction โดยใช้ value ของมัน
+  //   final finder = Finder(
+  //       filter: Filter.and([
+  //     Filter.equals('title', dTransaction.title),
+  //     Filter.equals('resta', dTransaction.resta),
+  //     Filter.equals('rating', dTransaction.rating),
+  //     Filter.equals('price', dTransaction.price),
+  //     Filter.equals('date', dTransaction.date.toIso8601String()),
+  //     Filter.equals('imgPath', dTransaction.imgPath),
+  //   ]));
+
+  //   // ค้นหาว่า record ที่ต้องการอัปเดตมีอยู่หรือไม่
+  //   final recordSnapshot = await store.findFirst(db, finder: finder);
+
+  //   // ถ้าพบ record ที่ต้องการ
+  //   if (recordSnapshot != null) {
+  //     // ทำการอัปเดตข้อมูลใหม่ทับ record เดิม
+  //     await store.record(recordSnapshot.key).update(db, updatedTransaction.toMap());
+  //   }
+  //   db.close();
+  // }
+
+  updateDatabase(Transactions statement) async{
     var db = await this.openDatabase();
-    //สร้างตัวแปร ที่ไปยัง database ที่ชื่อ expense
     var store = intMapStoreFactory.store('expense');
-
-    // ค้นหาข้อมูลที่ตรงกับ dTransaction โดยใช้ value ของมัน
-    final finder = Finder(
-        filter: Filter.and([
-      Filter.equals('title', dTransaction.title),
-      Filter.equals('resta', dTransaction.resta),
-      Filter.equals('rating', dTransaction.rating),
-      Filter.equals('price', dTransaction.price),
-      Filter.equals('date', dTransaction.date.toIso8601String()),
-      Filter.equals('imgPath', dTransaction.imgPath),
-    ]));
-
-    // ค้นหาว่า record ที่ต้องการอัปเดตมีอยู่หรือไม่
-    final recordSnapshot = await store.findFirst(db, finder: finder);
-
-    // ถ้าพบ record ที่ต้องการ
-    if (recordSnapshot != null) {
-      // ทำการอัปเดตข้อมูลใหม่ทับ record เดิม
-      await store.record(recordSnapshot.key).update(db, updatedTransaction.toMap());
-    }
+    var filter = Finder(filter: Filter.equals(Field.key, statement.keyID));
+    var result = store.update(db, finder: filter,  {
+      "title": statement.title,
+      "resta": statement.resta,
+      "rating": statement.rating,
+      "price": statement.price,
+      "date": statement.date.toIso8601String(),
+      "imgPath": statement.imgPath
+    });
     db.close();
+    print('update result: $result');
   }
 
   Future<List<Transactions>> loadAllData() async {
