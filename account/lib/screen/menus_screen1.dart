@@ -185,7 +185,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
                                           title: Text(
                                               '${statement.title} - ${statement.resta}'),
                                           content: Text(
-                                              'Are you sure you want to edit it'),
+                                              'Are you sure you want to edit it?'),
                                           actions: [
                                             TextButton(
                                                 onPressed: () {
