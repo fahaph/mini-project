@@ -15,7 +15,6 @@ class MenusScreen1 extends StatefulWidget {
 // ==============================================================================================================
 
 class _MenusScreen1State extends State<MenusScreen1> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +59,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
                 maxCrossAxisExtent: 225,
                 // mainAxisSpacing: 10,
                 // crossAxisSpacing: 10,
-                childAspectRatio: 2.95 / 5,
+                childAspectRatio: 3 / 5,
               ),
               itemBuilder: (context, index) {
                 var statement = provider.transactions[index];
@@ -83,7 +82,7 @@ class _MenusScreen1State extends State<MenusScreen1> {
                         width: 100,
                         height: 100,
                       ),
-                      
+
                       SizedBox(
                         height: 4,
                       ),
@@ -130,7 +129,8 @@ class _MenusScreen1State extends State<MenusScreen1> {
                           children: [
                             AutoSizeText(
                               '  ${statement.resta}',
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
                               maxLines: 1,
                               minFontSize: 1,
                             )
@@ -145,8 +145,9 @@ class _MenusScreen1State extends State<MenusScreen1> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AutoSizeText(
-                              '  ${statement.price.toString()}',
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              '  ${statement.price.toString()} Baht',
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
                               maxLines: 1,
                               minFontSize: 1,
                             )
@@ -162,12 +163,17 @@ class _MenusScreen1State extends State<MenusScreen1> {
                           children: [
                             AutoSizeText(
                               '  ${DateFormat('dd/MM/yy hh:mm aaa').format(statement.date)}',
-                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
                               maxLines: 1,
                               minFontSize: 1,
                             ),
                           ],
                         ),
+                      ),
+
+                      SizedBox(
+                        height: 30,
                       ),
 
                       Container(
@@ -206,7 +212,8 @@ class _MenusScreen1State extends State<MenusScreen1> {
                                                 },
                                                 child: Text('Edit'),
                                                 style: TextButton.styleFrom(
-                                                    foregroundColor: Colors.white,
+                                                    foregroundColor:
+                                                        Colors.white,
                                                     backgroundColor:
                                                         Color.fromARGB(
                                                             255, 0, 150, 255))),
@@ -242,8 +249,10 @@ class _MenusScreen1State extends State<MenusScreen1> {
                                                 },
                                                 child: Text('Delete'),
                                                 style: TextButton.styleFrom(
-                                                    foregroundColor: Colors.white,
-                                                    backgroundColor: Colors.red)),
+                                                    foregroundColor:
+                                                        Colors.white,
+                                                    backgroundColor:
+                                                        Colors.red)),
                                           ],
                                         ));
                               },

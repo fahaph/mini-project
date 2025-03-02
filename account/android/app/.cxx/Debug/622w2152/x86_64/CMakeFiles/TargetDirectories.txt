@@ -1,0 +1,2 @@
+D:/NU Works/301/mini-project/account/android/app/.cxx/Debug/622w2152/x86_64/CMakeFiles/edit_cache.dir
+D:/NU Works/301/mini-project/account/android/app/.cxx/Debug/622w2152/x86_64/CMakeFiles/rebuild_cache.dir
